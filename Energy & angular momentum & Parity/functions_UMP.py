@@ -172,9 +172,9 @@ def generate_matrix_from_sympy(N_max, I, M, generating_function):
     return V
 
 
-#------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 # Input
-#------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 # N_max = len(Elist)
 # I = sum(Elist)
 # M = sum(Mlist)
@@ -186,27 +186,45 @@ Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1]
 
-#------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 # Run
-#------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 a = time.time()
-V_without_sympy = generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist)
+V1 = generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist)
 b = time.time()
 x, y, t, neg = sympy.symbols("x y t neg")
 gf = generating_function(Elist, Mlist, Plist)
-V_from_sympy = generate_matrix_from_sympy(N_max, I, M, gf)
+V2 = generate_matrix_from_sympy(N_max, I, M, gf)
 c = time.time()
 
-print("V1 shape =", V_without_sympy.shape, "V1 size =", V_without_sympy.size, "V1 bytes =", V_without_sympy.nbytes, "t1 =", b-a)
-print("V2 shape =", V_from_sympy.shape, "V2 size =", V_from_sympy.size, "V2 bytes =", V_from_sympy.nbytes, "t2 =", c-b)
+print("V1 shape =", V1.shape, "V1 size =", V1.size, "V1 bytes =", V1.nbytes, "t1 =", b-a)
+print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2 =", c-b)
 
-#------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 # Test
-#------------------------------------------------------------------------
-# Now I check whether these two method get the same expression or not
+#------------------------------------------------------------------------------------------------------------------------
+# Now I check whether these two methods get the same expression or not
 # It should be noticed that there is a big difference between V1 and V2
 # In V1, two elements with different parity P could have same (N, U, M), because they are calculated during expansion process
 # I can calculate (N, U, M, 0) - (N, U, M, 1) and get the right items of expanded expression
-# In V2, only one in (N, U, M, 0) & (N, U, M, 1) can be non-zero, because it is determined after expansion process
-# I choose the non-zero element (if possible) and attach corresponding sgin to it to get a right item of expanded expression
+# In V2, only one element in (N, U, M, 0) & (N, U, M, 1) can be non-zero, because it is determined after expansion process
+# I choose the non-zero element (if possible) and attach corresponding sgin to it to get the right item of expanded expression
 
+# V1
+# I get the index matrix with P = +1 by type V1[:, :, :, 0]
+#print(V1[:, :, :, 0].shape)
+# I get the index matrix with P = -1 by type V1[:, :, :, 1]
+#print(V1[:, :, :, 1].shape)
+# The elements are non-negative integer in both partial matrix and I can get the right parameter by subtraction
+V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
+
+# V2
+# I get the index matrix with P = +1 by type V2[:, :, :, 0]. I note it contains all the items with positive parameters
+#print(V2[:, :, :, 0].shape)
+# I get the index matrix with P = -1 by type V2[:, :, :, 1]. I note it contains all the items with negetive parameters
+#print(V2[:, :, :, 1].shape)
+# The elements are non-negative integer in both partial matrix and I can get the right parameter by subtraction
+V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
+
+print(V1_final == V2_final)
+print((V1_final == V2_final).all())
