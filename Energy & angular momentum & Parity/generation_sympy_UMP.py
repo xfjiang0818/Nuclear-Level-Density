@@ -123,4 +123,4 @@ gf = generating_function(Elist, Mlist, Plist)
 #------------------------------------------------------------------------
 V = generate_matrix_from_sympy(gf)
 #print(V[5][24])
-print(V)
+print(V.shape)
