@@ -1,8 +1,7 @@
-no_zero_dict = {}
+Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1]
+#------------------------------------------------------------------------
 
-no_zero_dict["0"] = [[0, 0]]
+# for convinence I use 0 and 1 to represent parity 1 and -1, respectively
+Plist_0_and_1 = [0 if i == 1 else 1 for i in Plist]
 
-for [x, y] in no_zero_dict["0"]:
-    print(x,y)
-
-
+print(Plist_0_and_1)
