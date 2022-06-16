@@ -87,7 +87,7 @@ def generate_matrix_from_sympy(generating_function):
     expanded_expression = str(sympy.expand(generating_function)).split(" + ")
     
     # creat a matrix to store every items of the expression
-    V = np.zeros((11, 56, 56, 2))
+    V = np.zeros((13, 79, 79, 2))
     
     for l in expanded_expression:
         # change every items in the expession string into a convenient form
@@ -104,16 +104,19 @@ def generate_matrix_from_sympy(generating_function):
         P = get_index(l_item)[3]
         C = get_index(l_item)[4]
 
-        #print(C, N, U, M, P)
+        if N == 5 and U == 24 and M == 24:
+            print("C =", C, "P =", P, "M =", M, "N =", N, "U =", U)
+
+        
         # for every item in the expression, I add it to the matrix
         V[N][U][M][P] = C
     return V
 
 
 #------------------------------------------------------------------------
-Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1]
+Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1]
 
 #------------------------------------------------------------------------
 x, y, t, neg = sympy.symbols("x y t neg")

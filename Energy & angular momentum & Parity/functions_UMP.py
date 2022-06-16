@@ -175,16 +175,19 @@ def generate_matrix_from_sympy(N_max, I, M, generating_function):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-# N_max = len(Elist)
-# I = sum(Elist)
-# M = sum(Mlist)
-N_max = 12
-I = 78
-M = 78
-
 Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1]
+#Elist = [1, 2, 3, 4, 5]
+#Mlist = [1, 2, 3, 4, 5]
+#Plist = [1, 1, 1, -1, -1]
+
+N_max = len(Elist)
+I = sum(Elist)
+M = sum(Mlist)
+#N_max = 5
+#I = 15
+#M = 15
 
 #------------------------------------------------------------------------------------------------------------------------
 # Run
@@ -226,5 +229,6 @@ V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
 # The elements are non-negative integer in both partial matrix and I can get the right parameter by subtraction
 V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
 
-print(V1_final == V2_final)
+print(V1[5, 24, 24, :])
+print(V2[5, 24, 24, :])
 print((V1_final == V2_final).all())
