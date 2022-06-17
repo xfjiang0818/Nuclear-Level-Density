@@ -82,11 +82,7 @@ def generating_function(Elist, Mlist, Plist):
 def get_index(line):
     indexlist = ["x", "y", "t", "neg"]
     if line == ["1"]:
-        C = 1
-        N = 0
-        U = 0
-        M = 0
-        P = 0
+        N, U, M, P, C = 0, 0, 0, 0, 1
     else:
         # calculate parameter C
         if line[0] in indexlist:
