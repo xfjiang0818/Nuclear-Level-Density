@@ -98,18 +98,16 @@ def generate_matrix_from_sympy(generating_function):
             if i != "":
                 l_item.append(i)
         #print(l_item)
-        N = get_index(l_item)[0]
-        U = get_index(l_item)[1]
-        M = get_index(l_item)[2]
-        P = get_index(l_item)[3]
-        C = get_index(l_item)[4]
+        indexlist = get_index(l_item).copy()
+        N, U, M, P, C = indexlist[0], indexlist[1], indexlist[2], indexlist[3], indexlist[4]
 
         if N == 5 and U == 24 and M == 24:
+            print(l)
             print("C =", C, "P =", P, "M =", M, "N =", N, "U =", U)
 
         
         # for every item in the expression, I add it to the matrix
-        V[N][U][M][P] = C
+        V[N][U][M][P] += C
     return V
 
 

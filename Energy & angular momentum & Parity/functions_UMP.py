@@ -160,15 +160,12 @@ def generate_matrix_from_sympy(N_max, I, M, generating_function):
             if i != "":
                 l_item.append(i)
         #print(l_item)
-        N = get_index(l_item)[0]
-        U = get_index(l_item)[1]
-        M = get_index(l_item)[2]
-        P = get_index(l_item)[3]
-        C = get_index(l_item)[4]
+        indexlist = get_index(l_item).copy()
+        N, U, M, P, C = indexlist[0], indexlist[1], indexlist[2], indexlist[3], indexlist[4]
 
         #print(C, N, U, M, P)
         # for every item in the expression, I add it to the matrix
-        V[N][U][M][P] = C
+        V[N][U][M][P] += C
     return V
 
 
@@ -207,28 +204,14 @@ print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2
 # Test
 #------------------------------------------------------------------------------------------------------------------------
 # Now I check whether these two methods get the same expression or not
-# It should be noticed that there is a big difference between V1 and V2
-# In V1, two elements with different parity P could have same (N, U, M), because they are calculated during expansion process
+# It should be noticed that two elements with different parity P could have same (N, U, M)
+# The elements are non-negative integer in both partial matrix and I can get the right parameter by subtractions
 # I can calculate (N, U, M, 0) - (N, U, M, 1) and get the right items of expanded expression
-# In V2, only one element in (N, U, M, 0) & (N, U, M, 1) can be non-zero, because it is determined after expansion process
-# I choose the non-zero element (if possible) and attach corresponding sgin to it to get the right item of expanded expression
 
 # V1
-# I get the index matrix with P = +1 by type V1[:, :, :, 0]
-#print(V1[:, :, :, 0].shape)
-# I get the index matrix with P = -1 by type V1[:, :, :, 1]
-#print(V1[:, :, :, 1].shape)
-# The elements are non-negative integer in both partial matrix and I can get the right parameter by subtraction
 V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
 
 # V2
-# I get the index matrix with P = +1 by type V2[:, :, :, 0]. I note it contains all the items with positive parameters
-#print(V2[:, :, :, 0].shape)
-# I get the index matrix with P = -1 by type V2[:, :, :, 1]. I note it contains all the items with negetive parameters
-#print(V2[:, :, :, 1].shape)
-# The elements are non-negative integer in both partial matrix and I can get the right parameter by subtraction
 V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
 
-print(V1[5, 24, 24, :])
-print(V2[5, 24, 24, :])
 print((V1_final == V2_final).all())
