@@ -33,6 +33,8 @@ def generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist):
     # for i = 0, 1, 2, ..., 9
     # Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 
     for i in range(length):
+        t_0 = time.time()
+          
         E = Elist[i]
         M = Mlist[i]
         P = Plist_0_and_1[i]
@@ -60,6 +62,9 @@ def generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist):
             # renew the dict of no-zero index
             if [x1, y1, t1, p1] not in non_zero_dict[str(i+1)]:
                 non_zero_dict[str(i+1)].append([x1, y1, t1, p1])
+        
+        t_1 = time.time()
+        print("i =", i, "Delta t =", t_1 - t_0)
     
     return matrix_dict[str(length)]
 
@@ -168,19 +173,23 @@ def generate_matrix_from_sympy(N_max, I, M, generating_function):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1]
-#Elist = [1, 2, 3, 4, 5]
-#Mlist = [1, 2, 3, 4, 5]
-#Plist = [1, 1, 1, -1, -1]
+Elist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+Mlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 5, 6, 7, 3, 4, 2, 6, 3, 2, 1]
+Plist = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1]
 
+#------------------------------------------------------------------------------------------------------------------------
 N_max = len(Elist)
 I = sum(Elist)
 M = sum(Mlist)
+#------------------------------------------------------------------------------------------------------------------------
 #N_max = 5
 #I = 15
 #M = 15
+#------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 #------------------------------------------------------------------------------------------------------------------------
 # Run
@@ -188,13 +197,13 @@ M = sum(Mlist)
 a = time.time()
 V1 = generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist)
 b = time.time()
-x, y, t, neg = sympy.symbols("x y t neg")
-gf = generating_function(Elist, Mlist, Plist)
-V2 = generate_matrix_from_sympy(N_max, I, M, gf)
-c = time.time()
+#x, y, t, neg = sympy.symbols("x y t neg")
+#gf = generating_function(Elist, Mlist, Plist)
+#V2 = generate_matrix_from_sympy(N_max, I, M, gf)
+#c = time.time()
 
 print("V1 shape =", V1.shape, "V1 size =", V1.size, "V1 bytes =", V1.nbytes, "t1 =", b-a)
-print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2 =", c-b)
+#print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2 =", c-b)
 
 #------------------------------------------------------------------------------------------------------------------------
 # Test
@@ -205,9 +214,9 @@ print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2
 # I can calculate (N, U, M, 0) - (N, U, M, 1) and get the right items of expanded expression
 
 # V1
-V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
+#V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
 
 # V2
-V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
+#V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
 
-print((V1_final == V2_final).all())
+#print((V1_final == V2_final).all())
