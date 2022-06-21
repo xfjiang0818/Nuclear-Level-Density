@@ -79,12 +79,34 @@ def generate_matrix_nonzero_list(N_max, E_max, M_max, Elist, Mlist, Plist):
 
 
 # N1 proton particle
-
 # N2 proton hole
-
 # N3 neutron particle
-
 # N4 neutron hole
 
+# choose a nuclei
+Z = 8
+N = 8
 
+# setup the (N_max, E_max, M_max) for different particles
+# it gives the shape (N_max + 1, E_max + 1, M_max + 1, 2) of matrices V1, V2, V3, and V4
+N_max_dict = {'proton particle': Z, 'proton hole': Z, 'neutron particle': N, 'neutron hole': N}
+E_max = 100
+M_max = 50
 
+# setup the (Elist, Mlist, Plist) for different particles
+# it is the single particle level scheme
+Elist_dict = {}
+Mlist_dict = {}
+Plist_dict = {}
+
+# Energy
+Elist_dict['proton particle'] = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+Elist_dict['proton hole'] = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+Elist_dict['neutron particle'] = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+Elist_dict['neutron hole'] = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+
+# Angular momentum
+Mlist_dict['proton particle'] = np.random.randint(0, 6, size = 10)
+Mlist_dict['proton particle'] = np.random.randint(0, 6, size = 8)
+Mlist_dict['proton particle'] = np.random.randint(0, 6, size = 10)
+Mlist_dict['proton particle'] = np.random.randint(0, 6, size = 8)

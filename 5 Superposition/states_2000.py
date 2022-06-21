@@ -1,4 +1,47 @@
 import numpy as np
+from decimal import Decimal
+
+
+f = open("Ne20singleparticle.txt", "r")
+linein = f.readlines()
+f.close()
+
+# delta E = 10 keV
+
+E_list = []
+M_list = []
+
+for line in linein:
+    l = line.split()
+    i = int(l[0])
+    E = int(10 * Decimal(float(l[1])).quantize(Decimal("0.1"), rounding = "ROUND_HALF_UP"))
+    M = int(2 * float(l[2]))
+    E_list.append(E)
+    E_list.append(E)
+    M_list.append(M)
+    M_list.append(-M)
+
+#print(E_list)
+#print(M_list)
+
+# for particle, E(i) = E(Z+i) - E(Z), where the E(Z) is fermi energy
+fermi = -122
+
+E_list_new = [i - fermi for i in E_list]
+
+E_particle = E_list_new[10:]
+E_hole = [-i for i in E_list_new[:10][::-1]]
+
+#print(E_particle)
+#print(E_hole)
+
+M_particle = M_list[10:]
+M_hole = [-i for i in M_list[:10][::-1]]
+#print(M_particle)
+#print(M_hole)
+
+
+import numpy as np
 import time
 
 
@@ -78,30 +121,22 @@ def generate_matrix_without_sympy(N_max, E_max, M_max, Elist, Mlist, Plist):
     return matrix_dict[str(length)]
 
 
-#------------------------------------------------------------------------------------------------------------------------
-# Input
-#------------------------------------------------------------------------------------------------------------------------
-size = 60
-Elist = np.random.randint(1, 11, size)
-Mlist = np.random.randint(0, 6, size)
-Plist = np.random.choice([-1, 1], size)
+Elist = E_particle
+Mlist = M_particle
+Plist = np.random.choice([-1, 1], size = len(Elist))
+N_max = 10
+E_max = 2000
+M_max = 50
+
 print(Elist)
 print(Mlist)
 print(Plist)
 
-#------------------------------------------------------------------------------------------------------------------------
-# I limit the number of excited particles
-N_max = size
-
-# I limit the size of matrix
-E_max = 20000
-M_max = 50
-
-#------------------------------------------------------------------------------------------------------------------------
-# Run
-#------------------------------------------------------------------------------------------------------------------------
 a = time.time()
 V1 = generate_matrix_without_sympy(N_max, E_max, M_max, Elist, Mlist, Plist)
 b = time.time()
+
+
+
 
 print("V1 shape =", V1.shape, "V1 size =", V1.size, "V1 bytes =", V1.nbytes, "t1 =", b-a)
