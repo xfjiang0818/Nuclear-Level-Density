@@ -1,3 +1,5 @@
+from random import seed
+from re import I
 import numpy as np
 import time
 
@@ -188,12 +190,20 @@ def V_particle(N_max, E_max, M_max, Elist, Mlist, Plist, Gaplist):
 
 
 def fold_ph(N_max, E_max, M_max, V1, V2):
+    '''
+    fold V1 and V2 to get V12
+    '''
     # V12 has the same shape as V1 and V2
     V12 = np.zeros_like(V1)
 
-    for n in range(N_max):
+    for n in range(N_max + 1):
+        ta = time.time()
+
         V1n = V1[n, :, :, :]
         V2n = V2[n, :, :, :]
+        
+        # count number
+        i = 0
 
         # I use zip to get index of nonzero elements from V1 and V2
         for (e1, m1, p1) in zip(np.nonzero(V1n)[0], np.nonzero(V1n)[1], np.nonzero(V1n)[2]):
@@ -201,8 +211,12 @@ def fold_ph(N_max, E_max, M_max, V1, V2):
                 e = e1 + e2
                 m = m1 + m2
                 p = abs(p1 - p2)
+                i += 1
                 if e <= E_max and m <= M_max * 2 and m >= 0:
                     V12[n, e, m, p] += V1n[e1, m1, p1] * V2n[e2, m2, p2]
+
+        tb = time.time()
+        print("n =", n, "\t", i,  "\t", tb - ta)
     
     return V12
 
@@ -210,7 +224,7 @@ def fold_ph(N_max, E_max, M_max, V1, V2):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-size = 10
+size = 8
 Elist = np.random.randint(1, 11, size)
 Mlist = np.random.randint(0, 6, size)
 Plist = np.random.choice([-1, 1], size)
@@ -225,7 +239,7 @@ print(Gaplist)
 N_max = size
 
 # I limit the size of matrix
-E_max = 200
+E_max = 20000
 M_max = 50
 
 #------------------------------------------------------------------------------------------------------------------------
@@ -236,6 +250,7 @@ V_1 = V_particle(N_max, E_max, M_max, Elist, Mlist, Plist, Gaplist)
 b = time.time()
 V_2 = V_hole(N_max, E_max, M_max, Elist, Mlist, Plist, Gaplist)
 c = time.time()
+print("\n---------------- fold ----------------\n")
 V12 = fold_ph(N_max, E_max, M_max, V_1, V_2)
 d = time.time()
 
