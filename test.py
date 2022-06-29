@@ -1,5 +1,9 @@
 import numpy as np
 
+a = np.array([[1, 2], [3, 4], [5, 6]])
+print(list(np.nonzero(a))[0][0])
 
-Elist = np.random.randint(1, 11, size = 10)
-print(Elist)
+print(list(range(10)))
+
+for i in range(10):
+    print(i)
