@@ -1,3 +1,4 @@
 # Nuclear-Level-Density
 
-Calculation of nuclear level densities
+Calculation nuclear level densities with combinatorial method
+
