@@ -224,11 +224,12 @@ def fold_ph(N_max, E_max, M_max, V1, V2):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-size = 8
+size = 50
 Elist = np.random.randint(1, 11, size)
 Mlist = np.random.randint(0, 6, size)
 Plist = np.random.choice([-1, 1], size)
 Gaplist = np.array([1] * size)
+print("\n---------------- input ----------------\n")
 print(Elist)
 print(Mlist)
 print(Plist)
@@ -246,8 +247,10 @@ M_max = 50
 # Run
 #------------------------------------------------------------------------------------------------------------------------
 a = time.time()
+print("\n---------------- V1 ----------------\n")
 V_1 = V_particle(N_max, E_max, M_max, Elist, Mlist, Plist, Gaplist)
 b = time.time()
+print("\n---------------- V2 ----------------\n")
 V_2 = V_hole(N_max, E_max, M_max, Elist, Mlist, Plist, Gaplist)
 c = time.time()
 print("\n---------------- fold ----------------\n")
@@ -257,3 +260,11 @@ d = time.time()
 print("shape =", V_1.shape, "size =", V_1.size, "bytes =", V_1.nbytes, "t =", b-a)
 print("shape =", V_2.shape, "size =", V_2.size, "bytes =", V_2.nbytes, "t =", c-b)
 print("shape =", V12.shape, "size =", V12.size, "bytes =", V12.nbytes, "t =", d-c)
+lineout = []
+lineout.append("shape ="+str(V_1.shape)+"size ="+str(V_1.size)+"bytes ="+str(V_1.nbytes)+"t ="+str(b-a))
+lineout.append("shape ="+str(V_2.shape)+"size ="+str(V_2.size)+"bytes ="+str(V_2.nbytes)+"t ="+str(c-b))
+lineout.append("shape ="+str(V12.shape)+"size ="+str(V12.size)+"bytes ="+str(V12.nbytes)+"t ="+str(d-c))
+
+f = open("fold.text", "w")
+f.writelines(lineout)
+f.close()
