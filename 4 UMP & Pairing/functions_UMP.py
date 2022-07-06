@@ -183,9 +183,9 @@ def generate_matrix_from_sympy(N_max, E_max, M_max, generating_function):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-Elist = np.random.randint(1, 11, size = 50)
-Mlist = np.random.randint(0, 6, size = 50)
-Plist = np.random.choice([-1, 1], size = 50)
+Elist = np.random.randint(1, 11, size = 20)
+Mlist = np.random.randint(0, 6, size = 20)
+Plist = np.random.choice([-1, 1], size = 20)
 print(Elist)
 print(Mlist)
 print(Plist)

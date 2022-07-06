@@ -197,13 +197,13 @@ M = sum(Mlist)
 a = time.time()
 V1 = generate_matrix_without_sympy(N_max, I, M, Elist, Mlist, Plist)
 b = time.time()
-#x, y, t, neg = sympy.symbols("x y t neg")
-#gf = generating_function(Elist, Mlist, Plist)
-#V2 = generate_matrix_from_sympy(N_max, I, M, gf)
-#c = time.time()
+x, y, t, neg = sympy.symbols("x y t neg")
+gf = generating_function(Elist, Mlist, Plist)
+V2 = generate_matrix_from_sympy(N_max, I, M, gf)
+c = time.time()
 
 print("V1 shape =", V1.shape, "V1 size =", V1.size, "V1 bytes =", V1.nbytes, "t1 =", b-a)
-#print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2 =", c-b)
+print("V2 shape =", V2.shape, "V2 size =", V2.size, "V2 bytes =", V2.nbytes, "t2 =", c-b)
 
 #------------------------------------------------------------------------------------------------------------------------
 # Test
@@ -214,9 +214,9 @@ print("V1 shape =", V1.shape, "V1 size =", V1.size, "V1 bytes =", V1.nbytes, "t1
 # I can calculate (N, U, M, 0) - (N, U, M, 1) and get the right items of expanded expression
 
 # V1
-#V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
+V1_final = V1[:, :, :, 0] - V1[:, :, :, 1]
 
 # V2
-#V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
+V2_final = V2[:, :, :, 0] - V2[:, :, :, 1]
 
-#print((V1_final == V2_final).all())
+print((V1_final == V2_final).all())

@@ -191,8 +191,7 @@ def fold_ph(N_max, E_max, M_max, V1, V2):
     '''
     fold V1 and V2 to get V12
     '''
-    # V12 has the same shape as V1 and V2
-    # I set all elements to 0
+    # V12 has the same shape as V1 and V2, and I set all elements to 0
     V12 = np.zeros_like(V1)
 
     for n in range(N_max + 1):
@@ -223,8 +222,8 @@ def fold_ph(N_max, E_max, M_max, V1, V2):
 #------------------------------------------------------------------------------------------------------------------------
 # Input
 #------------------------------------------------------------------------------------------------------------------------
-size = 5
-Elist = np.random.randint(1, 11, size)
+size = 10
+Elist = np.random.randint(1, 41, size)
 Mlist = np.random.randint(0, 6, size)
 Plist = np.random.choice([-1, 1], size)
 Gaplist = np.array([1] * size)
@@ -237,6 +236,7 @@ N_max = size
 # I limit the size of matrix
 E_max = 20000
 M_max = 50
+
 
 #------------------------------------------------------------------------------------------------------------------------
 # Run
@@ -272,3 +272,5 @@ lineout.append("shape ="+str(V12.shape)+"\tsize ="+str(V12.size)+"\tbytes ="+str
 f = open("fold.text", "w")
 f.writelines(lineout)
 f.close()
+
+
