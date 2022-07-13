@@ -60,7 +60,7 @@ def ph_levels(levels, fermi_energy, unit):
             epsilon = abs(epsilon)
             nu = int(0.5 + epsilon / unit)
             mu = int(0.5 + quasi_epsilon / unit)
-            h_list.append((nu, mu, mz, P, E))
+            h_list.append((nu, mu, mz, P))
     p_levels = sorted(p_list)
     h_levels = sorted(h_list)
     return p_levels, h_levels
@@ -70,8 +70,8 @@ def ph_levels(levels, fermi_energy, unit):
 # Input
 #------------------------------------------------------------------------------------------------------------------------
 unit = 0.01
-fermi_energy = -9.3928
-
+#fermi_energy = -9.3928
+fermi_energy = -7.7457
 
 #------------------------------------------------------------------------------------------------------------------------
 # Run
@@ -84,15 +84,13 @@ p_levels, h_levels = ph_levels(spl, fermi_energy, unit)[0], ph_levels(spl, fermi
 # Output
 #------------------------------------------------------------------------------------------------------------------------
 print("\n----------------------- single particle levels -----------------------")
-for i in spl:
-    print(i)
+for i in spl: print(i)
 print("\n--------------------------- particle levels ---------------------------")
-for i in p_levels:
-    print(i)
+for i in p_levels: print(i)
+print("\np levels number = ", len(p_levels))
 print("\n----------------------------- hole levels -----------------------------")
-for i in h_levels:
-    print(i)
-
+for i in h_levels: print(i)
+print("\nh levels number = ", len(h_levels))
 
 
 

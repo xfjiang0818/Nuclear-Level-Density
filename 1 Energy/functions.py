@@ -111,7 +111,4 @@ b = time.time()
 V2 = generate_matrix_from_sympy(generation_function)
 c = time.time()
 
-print(V1 == V2)
-print("t1 =", b-a)
-print("t2 =", c-b)
-
+print((V1 == V2).all())
